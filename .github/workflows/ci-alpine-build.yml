@@ -49,6 +49,7 @@ jobs:
       qbt_build_dir: "qbt-build"
       script_name: ${{ inputs.script_name }}
       container_name: "multiarch"
+      ARCH_FLAGS: "-march=loongarch64 -msimd=none -mno-lsx -mno-lasx"
 
     steps:
       - name: Checkout ${{ inputs.distinct_id }}
@@ -82,15 +83,15 @@ jobs:
           printf '%s\n' "qbt_revision_url=${{ github.repository }}" >> env.custom
           printf '%s\n' "qbt_standard=" >> env.custom
           printf '%s\n' "qbt_static_ish=" >> env.custom
-          printf '%s\n' "CFLAGS=-march=loongarch64\ -msimd=none\ -mno-lsx\ -mno-lasx" >> env.custom
-          printf '%s\n' "CPPFLAGS=-march=loongarch64\ -msimd=none\ -mno-lsx\ -mno-lasx" >> env.custom
-          printf '%s\n' "CXXFLAGS=-march=loongarch64\ -msimd=none\ -mno-lsx\ -mno-lasx" >> env.custom
+          # printf '%s\n' "CFLAGS=-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" >> env.custom
+          # printf '%s\n' "CPPFLAGS=-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" >> env.custom
+          # printf '%s\n' "CXXFLAGS=-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" >> env.custom
 
       # - name: Host - Github env to container ${{ inputs.distinct_id }}
       #   run: env >> env.custom
 
       - name: Host - check stuff ${{ inputs.distinct_id }}
-        run: export $(cat env.custom) && bash ${script_name}
+        run: export $(cat env.custom) && export CFLAGS="-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" && export CPPFLAGS="-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" && export CXXFLAGS="-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" && bash ${script_name}
 
       - name: Host - qBittorrent v5 transition ${{ inputs.distinct_id }}
         run: |
