@@ -92,9 +92,9 @@ jobs:
 
       - name: Host - Github env to container ${{ inputs.distinct_id }}
         run: |
-          printf '%s\n' 'CFLAGS="-march=loongarch64 -msimd=none -mno-lsx -mno-lasx"' >> env.custom
-          printf '%s\n' 'CPPFLAGS="-march=loongarch64 -msimd=none -mno-lsx -mno-lasx"' >> env.custom
-          printf '%s\n' 'CXXFLAGS="-march=loongarch64 -msimd=none -mno-lsx -mno-lasx"' >> env.custom
+          printf '%s\n' "CFLAGS=-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" >> env.custom
+          printf '%s\n' "CPPFLAGS=-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" >> env.custom
+          printf '%s\n' "CXXFLAGS=-march=loongarch64 -msimd=none -mno-lsx -mno-lasx" >> env.custom
 
       - name: Host - qBittorrent v5 transition ${{ inputs.distinct_id }}
         run: |
