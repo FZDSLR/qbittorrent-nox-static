@@ -36,9 +36,6 @@ jobs:
         qbt_libtorrent_version: ["1.2", "2.0"]
         qbt_build_tool: ["", "qmake"]
         include:
-          - qbt_build_tool: "qmake"
-            qbt_qt_version_name: "qt5-"
-            qbt_qt_version: "5"
           - qbt_build_tool: ""
             qbt_qt_version_name: ""
             qbt_qt_version: "6"
@@ -49,6 +46,9 @@ jobs:
       qbt_build_dir: "qbt-build"
       script_name: ${{ inputs.script_name }}
       container_name: "multiarch"
+      CFLAGS: "-march=loongarch64 -msimd=none -mno-lsx -mno-lasx"
+      CPPFLAGS: "-march=loongarch64 -msimd=none -mno-lsx -mno-lasx"
+      CXXFLAGS: "-march=loongarch64 -msimd=none -mno-lsx -mno-lasx"
 
     steps:
       - name: Checkout ${{ inputs.distinct_id }}
